@@ -90,21 +90,12 @@ app.post("/send-email-welcome", async (req, res) => {
 
         Seja muito bem-vindo(a) ao Senac!
         
-<<<<<<< HEAD
         Estamos muito felizes em tê-lo(a) conosco e esperamos que essa seja uma jornada de muito sucesso e aprendizado. Se precisar de qualquer coisa, não hesite em entrar em contato. `,
     html: `Olá <b>${nome}</b>,\n\n
         Seja muito bem-vindo(a) ao Senac!\n\n
 
         Estamos muito felizes em tê-lo(a) conosco e esperamos que essa seja uma jornada de muito sucesso e aprendizado. Se precisar de qualquer coisa, não hesite em entrar em contato.`,
   };
-=======
-        ${mensagem} `,
-        html: `Olá <b>${nome}</b>,\n\n
-        Seja muito bem-vindo(a) ao Senac!\n\n
-
-        ${mensagem}`
-    };
->>>>>>> fe6ad6b2e4fe26e28d77377ef97d1b18564d99c6
 
   try {
     await transporter.sendMail(mailOptions);
@@ -124,28 +115,7 @@ app.post("/send-email-passwordrec", async (req, res) => {
   for (let i = 0; i < string_length; i++) {
     const rnum = Math.floor(Math.random() * chars.length);
     randomstring += chars.substring(rnum, rnum + 1);
-<<<<<<< HEAD
   }
-=======
-}
-    
-    const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        }
-    });
-    
-    const mailOptions = {
-        from: "lucas.outro0106@gmail.com",
-        to: req.body.email,
-        subject: "Senha de recuperação do Email",
-        text: `Esta é uma senha temporária, logo após login altere a senha:` + randomstring,
-        html: `Esta é uma senha temporária, logo após login altere a senha:\n\n<b>${randomstring}</b>`
-    };
->>>>>>> fe6ad6b2e4fe26e28d77377ef97d1b18564d99c6
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -202,47 +172,6 @@ app.post("/send-email-modify-password", async (req, res) => {
     console.error("Erro ao enviar email:", error);
     res.status(500).json({ success: false, error: error.message });
   }
-});
-
-app.post('/send-email-passwordmod', async (req, res) => {
-    const { nome, email, mensagem } = req.body;
-    const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        }
-    });
-    const mailOptions = {
-        from: "lucas.outro0106@gmail.com",
-        to: email,
-        subject: 'Sua senha foi modificada com sucesso.',
-        text: `Olá ${nome},
-
-        Informamos que sua senha foi alterada com sucesso.
-        
-        Se você não solicitou essa mudança, entre em contato conosco imediatamente.
-        
-        Atenciosamente,
-        
-        Alberto
-        Senac`,
-        html: `Olá <b>${nome}</b>,<br>
-
-        ${mensagem}<br>
-        
-        Alberto
-        Senac`
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        res.json({ success: true });
-    } catch (error) {
-        console.error('Erro ao enviar email:', error);
-        res.status(500).json({ success: false, error: error.message });
-    }
 });
 
 const port = 5000;
